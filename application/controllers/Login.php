@@ -24,8 +24,7 @@ class Login extends CI_Controller {
 
 	public function newacct() {
 		$creds = $this->input->post( array('name', 'email', 'password'), TRUE);
-		echo '<pre>'.print_r($creds,true).'</pre>';
 		$this->user->create($creds);
-		//redirect('/');
+		redirect('/');
 	}
 }
