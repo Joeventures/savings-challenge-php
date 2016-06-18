@@ -11,10 +11,8 @@ class Login extends CI_Controller {
 
 	public function go() {
 		$creds = $this->input->post(array('email', 'password'),TRUE);
-		if ($this->user->login($creds['email'], $creds['password'])) {
-			redirect('/');
-		}
-
+		$this->user->login($creds['email'], $creds['password']);
+		redirect('/');
 	}
 
 	public function stop() {

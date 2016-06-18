@@ -25,11 +25,17 @@ class User extends CI_Model {
 			$this->session->set_userdata('loggedin', $name);
 			return true;
 		}
+		$this->session->set_flashdata('danger', 'That email/password combination does not exist. Please try again.');
 		return false;
 	}
 
 	public function create($user_info) {
+		if($this->get($user_info['email'])) {
+			$this->session->set_flashdata('danger', 'That user already exists.');
+			return false;
+		}
 		$user_info['password'] = $this->hash_password($user_info['password']);
+		$this->session->set_flashdata('success', 'User account created. You may now log in.');
 		return $this->db->insert('users', $user_info);
 	}
 

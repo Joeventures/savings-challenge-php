@@ -39,3 +39,12 @@
 	</div>
 	<!-- /.container -->
 </nav>
+<?php
+if ($this->session->flashdata()) {
+	foreach($this->session->flashdata() as $flash => $data) { ?>
+		<div class="alert alert-<?php echo $flash; ?>" role="alert">
+			<?php echo $data; ?>
+		</div>
+	<?php }
+}
+?>
