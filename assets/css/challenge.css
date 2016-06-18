@@ -1,0 +1,38 @@
+.navbar-inverse {
+	background-image: linear-gradient(to bottom, #3ccc3c 0%, #282 100%);
+	border-color: #226622;
+}
+
+.navbar-inverse .navbar-brand,
+.navbar-inverse .navbar-nav > li > a {
+	color: black;
+	text-shadow: none;
+}
+
+.form-horizontal .control-label {
+	padding-top: 0;
+}
+
+.table-payment tbody tr {
+	height: 35px;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+	position: relative;
+	min-height: 100%;
+}
+body {
+	/* Margin bottom by footer height */
+	margin-bottom: 60px;
+}
+.footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	padding-top: 20px;
+	/* Set the fixed height of the footer here */
+	height: 60px;
+	background-color: #f5f5f5;
+}
