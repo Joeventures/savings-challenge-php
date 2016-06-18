@@ -23,7 +23,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = '';
+$environment = 'localhost' == $_SERVER['HTTP_HOST'] ? 'localhost/challenge/' : $_SERVER['SERVER_ADDR'];
+
+$config['base_url'] = 'http://' . $environment;
 
 /*
 |--------------------------------------------------------------------------
