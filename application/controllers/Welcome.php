@@ -21,7 +21,8 @@ class Welcome extends CI_Controller {
 	public function index()
 	{
 		$this->load->view('header');
-		$this->load->view('welcome_message');
+		$show = $this->session->userdata('loggedin') ? 'plan-list' : 'login';
+		$this->load->view($show);
 		$this->load->view('footer');
 	}
 }

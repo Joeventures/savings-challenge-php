@@ -9,7 +9,7 @@
 
 	<link rel="stylesheet" href="<?php echo base_url("assets/css/bootstrap.css"); ?>">
 	<link rel="stylesheet" href="<?php echo base_url("assets/css/challenge.css"); ?>">
-
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 </head>
 
 <body>
@@ -23,26 +23,16 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/">52 Week Money Challenge</a>
+			<a class="navbar-brand" href="<?php echo base_url(); ?>">52 Week Money Challenge</a>
 		</div>
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-navbar">
 			<ul class="nav navbar-nav">
-				<!-- #todo if user signed in -->
+				<?php if ($this->session->userdata('loggedin')) { ?>
 				<li>
-					<a>Profile</a>
+					<a href="<?php echo base_url('/login/stop'); ?>">Log Out</a>
 				</li>
-				<li>
-					<a>Log Out</a>
-				</li>
-				<!-- #todo else -->
-				<li>
-					<a>Register</a>
-				</li>
-				<li>
-					<a>Login</a>
-				</li>
-				<!-- end if -->
+				<?php } ?>
 			</ul>
 		</div>
 		<!-- /.navbar-collapse -->
