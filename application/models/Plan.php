@@ -2,14 +2,17 @@
 
 class Plan extends CI_Model {
 
-	public $plans;
+	public $payments;
+	public $total;
+	public $id;
 
 	public function __construct() {
 		parent::__construct();
-		if($this->user->current) {
-			$id          = $this->user->current->id;
-			$this->plans = $this->db->get_where( 'plans', array( 'user_id' => $id ) );
-		}
+		if($this->id) $this->payments = $this->db->get_where('payments', array('plan_id' => $this->id));
+	}
+
+	public function id($id) {
+		$this->id = $id;
 	}
 
 	public function validate_plan($total) {
@@ -24,9 +27,31 @@ class Plan extends CI_Model {
 		if($this->validate_plan($data['total'])) {
 			$data['user_id'] = $this->user->current->id;
 			$this->session->set_flashdata('success', 'Savings Plan created!');
-			return $this->db->insert('plans', $data);
+			$this->db->insert('plans', $data);
+			$this->id = $this->db->insert_id();
+			$this->total = $data['total'];
+			$this->build_payments();
+			$this->payments = $this->db->get_where('payments', array('plan_id' => $this->id));
 		}
 		return false;
 	}
 
+	private function build_payments() {
+		$inc = ($this->total - 52) / 1326.0;
+		$payment = 1;
+		$sum_payments = 0;
+		for($i = 1; $i <= 51; $i++) {
+			$data[] = array(
+				'plan_id' => $this->id,
+				'amount' => round($payment)
+			);
+			$sum_payments += $payment;
+			$payment += $inc;
+		}
+		$data[] = array(
+			'plan_id' => $this->id,
+			'amount' => $this->total - $sum_payments
+		);
+		$this->db->insert_batch('payments', $data);
+	}
 }

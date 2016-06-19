@@ -2,10 +2,16 @@
 
 class User extends CI_Model {
 	public $current;
+	public $plans;
 
 	public function __construct() {
 		parent::__construct();
 		$this->current = $this->session->userdata('loggedin');
+
+		if($this->current) {
+			$id          = $this->current->id;
+			$this->plans = $this->db->get_where( 'plans', array( 'user_id' => $id ) );
+		}
 	}
 
 	public function get($user) {

@@ -19,7 +19,7 @@ class Welcome extends CI_Controller {
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
 	public function index() {
-		$data['plans'] = $this->session->userdata('loggedin') ? $this->plan->plans : null;
+		$data['plans'] = $this->session->userdata('loggedin') ? $this->user->plans : null;
 
 		$this->load->view('header');
 		$show = $this->session->userdata('loggedin') ? 'plan-list' : 'login';
