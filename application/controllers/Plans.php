@@ -19,4 +19,13 @@ class Plans extends CI_Controller {
 		$this->load->view('plan');
 		$this->load->view('footer');
 	}
+
+	public function deposit($payment_id) {
+		$this->db->set('complete', true);
+		$this->db->set('payment_date', date('Y-m-d'));
+		$this->db->where('id', $payment_id);
+		$this->db->update('payments');
+		$plan_id = $this->db->get_where('payments', array('id' => $payment_id))->row('plan_id');
+		redirect('/plans/'.$plan_id);
+	}
 }

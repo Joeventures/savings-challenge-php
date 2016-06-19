@@ -23,6 +23,7 @@ class Plan extends CI_Model {
 	}
 
 	public function progress($payments) {
+		$payments = array_filter($payments, function($x) { return $x['complete']; });
 		$payments = array_column($payments, 'amount');
 		return array_sum($payments);
 	}
