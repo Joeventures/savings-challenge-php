@@ -44,7 +44,13 @@ class User extends CI_Model {
 
 	public function plans() {
 		$id          = $this->current->id;
-		$this->plans = $this->db->get_where( 'plans', array( 'user_id' => $id ) );
+		$this->plans = $this->db->get_where( 'plans', array( 'user_id' => $id ) )->result_array();
+		foreach($this->plans as $key => $plan) {
+			$criteria = array('plan_id' => $plan['id'], 'complete' => true);
+			$payments = $this->db->get_where('payments', $criteria)->result_array();
+			$payments = array_column($payments, 'amount');
+			$this->plans[$key]['progress'] = array_sum($payments);
+		}
 	}
 
 	private function hash_password($password) {

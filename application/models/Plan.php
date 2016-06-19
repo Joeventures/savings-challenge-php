@@ -5,6 +5,7 @@ class Plan extends CI_Model {
 	public $payments;
 	public $total;
 	public $id;
+	public $progress;
 
 	public function __construct() {
 		parent::__construct();
@@ -17,6 +18,13 @@ class Plan extends CI_Model {
 			$this->payments = $this->db->get_where('payments', array('plan_id' => $id));
 		if(!$this->total)
 			$this->total = $this->db->get_where('plans', array('id' => $id))->row()->total;
+		if(!$this->progress)
+			$this->progress = $this->progress($this->payments->result_array());
+	}
+
+	public function progress($payments) {
+		$payments = array_column($payments, 'amount');
+		return array_sum($payments);
 	}
 
 	public function validate_plan($total) {

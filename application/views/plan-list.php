@@ -5,7 +5,7 @@
 	</div>
 
 	<div class="lead">
-		<?php if($plans->conn_id->affected_rows) { ?>
+		<?php if($plans) { ?>
 		<div class="panel panel-default">
 			<div class="panel-heading">Your Savings Plans:</div>
 			<div class="row">
@@ -17,20 +17,22 @@
 							<th>Progress</th>
 						</tr></thead>
 						<tbody>
-						<?php foreach($plans->result_array() as $plan) { ?>
+						<?php foreach($plans as $plan) { ?>
 						<tr>
 							<td>
-								<a class="btn btn-default" href="http://challenge.money/plans/1">Laptop</a>
+								<a class="btn btn-default" href="<?php echo base_url('/plans/'.$plan['id']); ?>">
+									<?php echo $plan['title']; ?>
+								</a>
 							</td>
-							<td>$1,500</td>
+							<td>$<?php echo number_format($plan['total']); ?></td>
 							<td style="vertical-align: middle;">
 								<div class="progress" style="margin-bottom: 0;">
-									<div class="progress-bar" role="progressbar" aria-valuenow="6" aria-valuemin="0" aria-valuemax="100" style="width: 6%; min-width: 2em;">
-										6%
+									<?php $progress = ceil(($plan['progress'] / $plan['total']) * 100); ?>
+									<div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $progress; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $progress; ?>%; min-width: 2em;">
+										<?php echo $progress; ?>%
 									</div>
 								</div>
 							</td>
-
 						</tr>
 						<?php } ?>
 						</tbody>
@@ -60,11 +62,8 @@
 							<input type="submit" class="btn btn-default" value="Create a Plan" name="commit">
 						</div>
 					</div>
-				</form>      </div>
+				</form>
+			</div>
 		</div>
 	</div>
-
-<pre>
-	<?php print_r( $plans ); ?>
-</pre>
 </div>
