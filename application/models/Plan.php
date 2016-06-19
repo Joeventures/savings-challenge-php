@@ -13,6 +13,10 @@ class Plan extends CI_Model {
 
 	public function id($id) {
 		$this->id = $id;
+		if(!$this->payments)
+			$this->payments = $this->db->get_where('payments', array('plan_id' => $id));
+		if(!$this->total)
+			$this->total = $this->db->get_where('plans', array('id' => $id))->row()->total;
 	}
 
 	public function validate_plan($total) {

@@ -9,8 +9,7 @@ class User extends CI_Model {
 		$this->current = $this->session->userdata('loggedin');
 
 		if($this->current) {
-			$id          = $this->current->id;
-			$this->plans = $this->db->get_where( 'plans', array( 'user_id' => $id ) );
+			$this->plans();
 		}
 	}
 
@@ -41,6 +40,11 @@ class User extends CI_Model {
 		$user_info['password'] = $this->hash_password($user_info['password']);
 		$this->session->set_flashdata('success', 'User account created. You may now log in.');
 		return $this->db->insert('users', $user_info);
+	}
+
+	public function plans() {
+		$id          = $this->current->id;
+		$this->plans = $this->db->get_where( 'plans', array( 'user_id' => $id ) );
 	}
 
 	private function hash_password($password) {
