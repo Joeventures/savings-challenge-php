@@ -20,9 +20,7 @@ class User extends CI_Model {
 		$this->db->where('email', $user);
 		$hash = $this->db->get()->row('password');
 		if ($this->verify_password($password, $hash)) {
-//			echo '<pre>'.print_r($this->get($user),true).'</pre>';
-			$name = $this->get($user)->name;
-			$this->session->set_userdata('loggedin', $name);
+			$this->session->set_userdata('loggedin', $this->get($user));
 			return true;
 		}
 		$this->session->set_flashdata('danger', 'That email/password combination does not exist. Please try again.');
