@@ -6,8 +6,10 @@ class Plan extends CI_Model {
 
 	public function __construct() {
 		parent::__construct();
-		$id = $this->user->current->id;
-		$this->plans = $this->db->get_where('plans', array('user_id' => $id));
+		if($this->user->current) {
+			$id          = $this->user->current->id;
+			$this->plans = $this->db->get_where( 'plans', array( 'user_id' => $id ) );
+		}
 	}
 
 	public function validate_plan($total) {
